@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+    - echo Pre Build started on phase...
+    - git clone https://github.com/flutter/flutter.git -b stable
+    - export PATH="$PATH:`pwd`/flutter/bin"
+    - flutter precache
+    - flutter doctor
+  build:
+    commands:
+    - echo Build started on `date`
+    - flutter build web
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+  - '**/*'
+  base-directory: 'build/web'
