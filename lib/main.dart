@@ -1,48 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:ono_frontend/views/homepage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const OnoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class OnoApp extends StatelessWidget {
+  const OnoApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  final title = 'Overnight Office';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Overnight Office',
+      title: title,
       theme: ThemeData(
-        primarySwatch: Colors.orange,
-        secondaryHeaderColor: Colors.deepPurple,
+        primaryColor: Colors.black,
       ),
-      home: const MyHomePage(title: 'Overnight Office'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Overnight Office new site',
-            ),
-          ],
-        ),
-      ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+      initialRoute: MyHomePage.homePageRoute,
+      routes: {MyHomePage.homePageRoute: (context) => MyHomePage(title: title)},
+      debugShowCheckedModeBanner: false,
     );
   }
 }
