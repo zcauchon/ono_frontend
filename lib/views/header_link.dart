@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ono_frontend/views/homepage.dart';
 
 class HeaderLink extends StatelessWidget {
   const HeaderLink(
@@ -13,7 +14,10 @@ class HeaderLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.popAndPushNamed(
+            context, destination ?? HomePage.homePageRoute);
+      },
       child: Text(
         title,
         style: TextStyle(

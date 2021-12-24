@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:ono_frontend/models/cart.dart';
 import 'package:ono_frontend/models/product.dart';
 import 'package:ono_frontend/service/api_gateway.dart';
-import 'package:ono_frontend/views/header_link.dart';
+import 'package:provider/provider.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+import 'ono_app_bar.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
   static const String homePageRoute = '/home';
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   late Future<List<Product>> productList;
   @override
   void initState() {
@@ -25,30 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: TextButton(
-          onPressed: () {},
-          child: Text(
-            widget.title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-        ),
-        actions: [
-          const HeaderLink(
-            title: 'Shop',
-            active: true,
-          ),
-          const HeaderLink(title: 'Installation & Reconfigure'),
-          const HeaderLink(title: 'Moving & Storage'),
-          const HeaderLink(title: 'Service'),
-          const HeaderLink(title: 'Delivery Services'),
-          const HeaderLink(title: 'Consignment'),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
-        ],
-      ),
+      appBar: OnoAppBar(title: widget.title),
       body: FutureBuilder<List<Product>>(
         future: productList,
         builder: (ctx, snapshot) {
@@ -64,20 +44,47 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(10.0),
               children: List.from(
                 snapshot.data!.map(
-                  (e) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  (e) => Stack(
                     children: [
                       Expanded(
                         child: Image.network(e.image),
                       ),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            e.title,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white54),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      e.title,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Provider.of<CartModel>(context,
+                                                listen: false)
+                                            .add(e);
+                                      },
+                                      //add/remove from cart
+                                      child: const Text(
+                                        "Add",
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Text('\$${e.price}'),
+                              ],
+                            ),
                           ),
-                          Text('\$${e.price}'),
                         ],
                       ),
                     ],
