@@ -3,14 +3,18 @@ class Product {
   late String title;
   late String? description;
   late String price;
-  late String image;
+  late String? image;
+  late String? quantity;
+  late String? tags;
 
   Product(
       {required this.productID,
       required this.title,
-      this.description,
       required this.price,
-      this.image = ''});
+      this.description,
+      this.image,
+      this.quantity,
+      this.tags});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -19,6 +23,7 @@ class Product {
       title: json['title']['S'].toString(),
       description: json['description']['S'].toString(),
       image: json['image']['S'].toString(),
+      quantity: json['quantity']['N'].toString(),
     );
   }
 }

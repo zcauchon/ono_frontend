@@ -7,9 +7,8 @@ import 'package:provider/provider.dart';
 import 'ono_app_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
-  final String title;
   static const String homePageRoute = '/home';
 
   @override
@@ -28,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: OnoAppBar(title: widget.title),
+      appBar: const OnoAppBar(title: 'Overnight Office'),
       body: FutureBuilder<List<Product>>(
         future: productList,
         builder: (ctx, snapshot) {
@@ -46,8 +45,10 @@ class _HomePageState extends State<HomePage> {
                 snapshot.data!.map(
                   (e) => Stack(
                     children: [
-                      Expanded(
-                        child: Image.network(e.image),
+                      Image.network(
+                        e.image ?? '',
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset('images/default-product-image.png'),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.end,

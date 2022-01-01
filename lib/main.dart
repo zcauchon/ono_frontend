@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ono_frontend/models/cart.dart';
 import 'package:ono_frontend/views/cartpage.dart';
 import 'package:ono_frontend/views/homepage.dart';
+import 'package:ono_frontend/views/adminpage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +25,9 @@ class OnoApp extends StatelessWidget {
           title: title,
           initialRoute: HomePage.homePageRoute,
           routes: {
-            HomePage.homePageRoute: (context) => HomePage(title: title),
+            HomePage.homePageRoute: (context) => const HomePage(),
             CartPage.cartPageRoute: (context) => const CartPage(),
+            AdminPage.adminPageRoute: (context) => AdminPage(),
           },
           debugShowCheckedModeBanner: false,
         ));
